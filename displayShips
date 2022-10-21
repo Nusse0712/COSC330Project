@@ -1,0 +1,40 @@
+public void displayShips() {
+	Ship[] tempShip = player.getShip();
+	
+	int originalVal[] = new int[5]; 
+	
+	for(int i = 0; i < player.getNumberOfShips(); ++i) {
+		originalVal[i] = tempShip[i].getNumHoles();
+	}
+	
+	
+	System.out.println("_____________________");
+	System.out.println("    SHIP STATUS                           Cole Nussear and George Fotiou");
+	System.out.println("_____________________");
+	 for(int i = 0; i < 5; ++i) {
+			 
+		 System.out.print(tempShip[i].getBoatname() + "(" +tempShip[i].getShipID() + "): ");
+		 
+		 if(tempShip[i].getHolesLeft() == 0) {
+			 System.out.print("SUNKED");
+		 }else { 
+			 
+		 	for(int j = 0; j < tempShip[i].getHolesLeft(); ++j) {
+		 		System.out.print("\u2665 ");
+		 	}
+		 	
+		 	
+		 	for(int h = 0; h < (originalVal[i] - tempShip[i].getHolesLeft()); ++h) {
+		 		
+		 		if(originalVal[i] > tempShip[i].getHolesLeft()) {
+		 			System.out.print("\u2661 ");
+		 		}
+		 	}
+		 }
+		 	
+		 	
+		 	System.out.println();
+		 	System.out.println("_____________________");
+	 }
+	
+}//end of display ships
