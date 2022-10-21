@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 public class Player {
 	private Ship[] ships; 
@@ -9,15 +8,15 @@ public class Player {
 		ships = new Ship[5];
 		
 		ships[0] = new Ship("Carrier",5,'%');
-		ships[1] = new Ship("battleship",4,'#'); 
-		ships[2] = new Ship("cruiser",3,'&');
-		ships[3] = new Ship("submarine",3,'!');
-		ships[4] = new Ship("destroyer",2,'?'); 
+		ships[1] = new Ship("Battleship",4,'#'); 
+		ships[2] = new Ship("Cruiser",3,'&');
+		ships[3] = new Ship("Submarine",3,'!');
+		ships[4] = new Ship("Destroyer",2,'?'); 
 		
 		numberOfShips = 5; 
 		
-		topgrid = new Grid(); 
-		bottomgrid = new Grid(); 
+		topgrid = new Grid("Top Grid"); 
+		bottomgrid = new Grid("Bottom Grid"); 
 		
 		
 	}
@@ -29,8 +28,8 @@ public class Player {
 		this.ships[i] = ship;
 	}
 	
-	public Ship getShip(int i){
-		return ships[i];
+	public Ship[] getShip(){
+		return ships;
 	}
 	
 	public void setTopGrid(Grid topgrid){
@@ -57,10 +56,4 @@ public class Player {
 	  return numberOfShips;
 	}
 	
-	
-	
-	
-	
-	
-
 }

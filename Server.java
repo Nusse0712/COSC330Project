@@ -26,6 +26,7 @@ public class Server implements Role {
 	}
 	
 	public String recieveInfo() throws IOException{
+		socket = new DatagramSocket(5000);
 		       socket.setSoTimeout(60000);
 		       String message;
 				byte[] data = new byte[ 100 ];

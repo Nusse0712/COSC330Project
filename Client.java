@@ -37,7 +37,7 @@ public class Client implements Role {
  * 
  */
 	   public void sendInfo(String Message) throws IOException{
-		  
+		   socket = new DatagramSocket();
 		   byte[] data = Message.getBytes();
 		   InetAddress ip = InetAddress.getByName("127.0.0.1");  
 		   DatagramPacket sendPacket = new DatagramPacket(data, data.length, ip,5000);
