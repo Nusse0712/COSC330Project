@@ -3,13 +3,21 @@ import java.util.Scanner;
 public class ServerTest {
 
 	public static void main(String[] args) throws IOException {
-		Server app = new Server(); 
-		Scanner myScan = new Scanner(System.in);
-		String clientMessage = 	app.recieveInfo();
-		System.out.println(clientMessage); 
-		System.out.println("please print a message to the client"); 
-		String hostMessage = myScan.nextLine();
-		app.sendInfo(hostMessage);
-	}
+		Controller server1 = new Controller("Server",4022,"localhost");
+		server1.setup();
+		server1.setShips();
+		if(server1.checkReady()==true){
+			System.out.println("game is ready");
+			while(true) {
+			server1.takeShot();
+			server1.recieveVerdict();
+			server1.display();
+			server1.getShot();
+			server1.display();
+			server1.checkWinner(); 
+			server1.getWinner();
+			}
+		}
+   }
 
 }
