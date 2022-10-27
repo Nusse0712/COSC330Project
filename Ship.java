@@ -3,22 +3,14 @@ public class Ship {
 	private int numHoles; 
 	private int countOfHoles; 
 	private char boatStatus; 
-	char[] IDarray;
-	char shipID;
-	private Coordinate[] posistion;
+	private char shipID;
 	
 	public Ship(String boatName,int numHoles, char shipID){
 	   this.boatName = boatName; 
 	   this.numHoles = numHoles; 
 	   this.countOfHoles = numHoles;
 	   this.boatStatus = 'U' ; 
-	   posistion = new Coordinate[this.numHoles];
 	   this.shipID = shipID;
-	   IDarray = new char[this.numHoles]; 
-	   
-	   for(int i = 0; i<this.numHoles; i++  ){
-		   IDarray[i] = this.shipID;
-	   }
 	   
 	}
 
@@ -28,6 +20,7 @@ public class Ship {
 	
 	public void getHit(){
 		countOfHoles--;
+		checkboatStatus();
 	}
 	
 	public int getHolesLeft(){
@@ -38,13 +31,7 @@ public class Ship {
 		return boatName;
 	}
 	
-	public void setPosistion(Coordinate[] posistion){
-		
-		this.posistion = posistion;	
-	}
-	public Coordinate[] getPosistion() {
-		return posistion;
-	}
+	
 	
 	
 	public void checkboatStatus(){
@@ -65,14 +52,14 @@ public class Ship {
 	
 	public void setShipID(char shipID){
 		this.shipID = shipID;
-	 for(int i = 0; i<this.numHoles; i++  ){
-			 IDarray[i] = this.shipID;
-		 }
+	
 		
 	}
 	
 	public char getShipID() {
 		return shipID; 
 	}
+	
+	
 	
 }
