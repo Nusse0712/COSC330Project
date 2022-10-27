@@ -45,10 +45,14 @@ public char[][] getGrid(){
 }
 
 public void insertHitPoint(int x, int y){
+
+	
 	grid[x][y] = 'H';
 }
 
 public void insertMissPoint(int x, int y) {
+	
+	
 	grid[x][y] = 'M';
 }
 

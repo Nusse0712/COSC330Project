@@ -133,7 +133,7 @@ public class Controller {
 	public int coordinateConvert(char c) {
 		if(c == 'A' || c == 'a')
 			return 0;
-		if(c == 'B' || c =='A')
+		if(c == 'B' || c =='b')
 			return 1;
 		if(c == 'C' || c =='c')
 			return 2;
@@ -192,8 +192,6 @@ public void getShot() throws IOException{
 public void recieveVerdict() throws IOException{
 	String shot = role1.recieveInfo(); 
 	char c = shot.charAt(0); 
-	System.out.println(this.getXshot()); 
-	System.out.println(this.getYshot());
 	if(c =='H') {
 		System.out.println("YOU HIT A SHIP");
 		player.getTopGrid().insertHitPoint(this.getYshot(), this.getXshot());
@@ -227,13 +225,13 @@ public void takeShot() throws IOException{
 	}catch(InputMismatchException e){
 		System.out.println("Please enter a valid row number");
 		keyboard.next();
+		y = keyboard.nextInt();
 	}
 	}while(y < 0 || y > 9);
 	this.setXshot(x);
 	this.setYshot(y); 
 	
 	String message = x +""+y;
-	System.out.println(message);
 	role1.sendInfo(message);
 }
 
