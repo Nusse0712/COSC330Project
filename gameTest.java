@@ -17,18 +17,20 @@ public class gameTest {
 		System.out.println("WELCOME TO BATTLESHIP"); 
 		String choice = args[0];
 		Controller controller1;
-	
+		String inetAdress ="";
 		if(choice.equalsIgnoreCase("Client")){
-			String inetAdress; 
+			 
 			System.out.println("Please print the IP address of the Server you are connecting to"); 
+			System.out.println("Or press enter to use localhost");
 			inetAdress = keyboard.nextLine();
 			if(inetAdress.isEmpty()){
+				System.out.println("localhost is used");
 				inetAdress ="localhost";
 			}
 		}
 		
 		if(choice.equalsIgnoreCase("server")) {
-			controller1 = new Controller("Server",4022,"localhost");
+			controller1 = new Controller("Server",4022, inetAdress);
 			controller1.setup();
 			controller1.setShips();
 			System.out.println("Waiting for the other player to finish setting their ships...");
@@ -48,7 +50,7 @@ public class gameTest {
 		}
 		
 		if(choice.equalsIgnoreCase("client")){
-			controller1 = new Controller("Client",4022,"localhost");
+			controller1 = new Controller("Client",4022,inetAdress);
 			controller1.setup();
 			controller1.setShips();
 			if(controller1.checkReady()==true){
