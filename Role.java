@@ -1,5 +1,5 @@
 import java.io.IOException;
-
+//public interface role 
 public interface Role {
 public void setup() throws IOException; 
 public void sendInfo(String Mess)throws IOException; 
