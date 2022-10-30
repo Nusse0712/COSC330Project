@@ -201,7 +201,7 @@ public void getShot() throws IOException{
 	}else {
 		System.out.println("ITS A MISS"); 
 		role1.sendInfo("M");
-		player.getBottomGrid().addMissPoint(y, x);
+		player.getBottomGrid().insertMissPoint(y, x);
 	}
 }
 
@@ -215,7 +215,7 @@ public void recieveVerdict() throws IOException{
 	}
 	if(c=='M') {
 		System.out.println("YOU MISSED");
-		player.getTopGrid().addMissPoint(this.getYshot(), this.getXshot()); //if the shot is a miss, an M is placed on top board to track player misses
+		player.getTopGrid().insertMissPoint(this.getYshot(), this.getXshot()); //if the shot is a miss, an M is placed on top board to track player misses
 	}
 	setXshot(-1); 
 	setYshot(-1);
