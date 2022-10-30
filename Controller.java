@@ -8,13 +8,14 @@ public class Controller {
 	private int xShot;
 	private int yShot;
 	private int port;
-	
+	private int enemyShipsLeft = 5;
 	Scanner keyboard = new Scanner(System.in); 
 	
 	//constructor for the controller 
 	public Controller(String choice, int port, String address){
+		//creates a new playermodel object
 		player = new Player(); 
-		
+		//depending on the choice for the role, the role will be initialized to either a Client or a Server
 		if(choice.equalsIgnoreCase("Server")){
 			role1 = new Server2(port); 
 		}else {
@@ -23,16 +24,17 @@ public class Controller {
 		
 	}
 	
+	//function that used the getBottomGrid function to get the most current bottom grid and displays it
 	public void displayBottomGrid(){
 		Grid tempGrid = player.getBottomGrid(); 
 		tempGrid.displayGrid();
 	}
-	
+	//function that used the getTopGrid function to get the most current top grid and displays it
 	public void displayTopGrid() {
 		Grid tempGrid = player.getTopGrid();
 		tempGrid.displayGrid();
 	}
-	
+	//display function that calls the displayTopGrid, displayBottomGrid and displayShips function 
 	public void display(){
 		displayTopGrid(); 
 		displayBottomGrid(); 
@@ -51,13 +53,17 @@ public class Controller {
 		int size; 
 		String name = " "; 
 		char id; 
+		//getting the array of ships
 		Ship[] tempShips = player.getShip();
+		//loop to increment through the array of ships to be placed
 		for(int j = 0; j < player.getNumberOfShips();j++){
 			size = tempShips[j].getNumHoles(); 
 			name = tempShips[j].getBoatname(); 
 			id = tempShips[j].getShipID(); 
+			//calls the displayTopGrid function and the displayBottomGrid function for each time a ship is placed
 			displayTopGrid();	
 			displayBottomGrid(); 
+			
 			System.out.println("ENTER A COLUMN TO PLACE "+name+" (size: "+size+")"); 
 			do {
 				letter = keyboard.next(); 
@@ -157,6 +163,10 @@ public class Controller {
 	
 public boolean checkShot(int x, int y) throws IOException { //Opposing player  
 	Ship[] tempShip = player.getShip();
+	if(player.getBottomGrid().getPoint(y, x) == 'H') {
+		System.out.println("Point already used ..");
+		return true; 
+	}
 		for(int i = 0; i < 5; i++) {
 		if(player.getBottomGrid().getPoint(y, x) == tempShip[i].getShipID()) {
 			tempShip[i].getHit();
@@ -170,14 +180,15 @@ public boolean checkShot(int x, int y) throws IOException { //Opposing player
 
 public void getShot() throws IOException{
 	System.out.println("WAITING FOR OTHER PLAYERS SHOT...");
+	//Receives info from the other player
 	String shot = role1.recieveInfo();
+	//algorithm to parse the message, and to get the separate x and y coordinates 
 	int shotIntForm = Integer.parseInt(shot);
 	System.out.println(shotIntForm);
 	int y = shotIntForm % 10; 
 	shotIntForm = shotIntForm - y; 
 	int x = shotIntForm / 10;
-	System.out.println("X value: " +x); 
-	System.out.println("Y value: "+ y);
+	//if the function checkshot is 
 	if(checkShot(x,y)==true) {
 		System.out.println("ITS A HIT");
 		role1.sendInfo("H");
@@ -251,6 +262,14 @@ public int getYshot() {
 	return yShot;
 }
 
+public void setEnemyShipsLeft(int enemyShipsLeft){
+	this.enemyShipsLeft = enemyShipsLeft;
+}
+
+public int getEnemyShips(){
+	return enemyShipsLeft;
+}
+
 public void setReady() throws IOException{
 	String mess = "Ready";
 	role1.sendInfo(mess);
@@ -266,19 +285,24 @@ public boolean checkReady() throws IOException{
 
 public void checkWinner() throws IOException {
 	String message = " "; 
-	int sunkCount = 0; 
+	int sunkCount = 5; 
 	Ship[] tempShips = player.getShip();
 	for(int i = 0; i < 5; i++){
+		System.out.println(tempShips[i].getBoatStatus());
 		if(tempShips[i].getBoatStatus()=='S') {
-			sunkCount++;
+			sunkCount--;
 		}
 	}
-	if(sunkCount == 5) {
+    System.out.println("sunken ships:"+sunkCount);
+	if(sunkCount == 0) {
 		message = "LOSER";
 		role1.sendInfo(message);
 		System.out.println("YOU LOST :( ");
+		 role1.closeConnection();
+    	 System.exit(-1);
 	}else{
-		message ="Still";
+		player.setNumberOfShips(sunkCount);
+		message =sunkCount +"";
 		role1.sendInfo(message);
 	}
 	   
@@ -286,11 +310,15 @@ public void checkWinner() throws IOException {
 
 public void getWinner() throws IOException{
      String message = role1.recieveInfo(); 
+     System.out.println(message);
      if(message.equalsIgnoreCase("LOSER")) {
     	 System.out.println("YOU ARE A WINNER");
     	 role1.closeConnection();
     	 System.exit(-1);
     	 
+     }else {
+    	 int enemyShip = Integer.parseInt(message);  
+    	 setEnemyShipsLeft(enemyShip);	
      }
 }
 
@@ -311,7 +339,7 @@ public void displayShips() {
 		originalVal[i] = tempShip[i].getNumHoles();
 	}
 	
-	
+	System.out.println("Enemy Ships Left:"+getEnemyShips());
 	System.out.println("_____________________");
 	System.out.println("    SHIP STATUS                           Cole Nussear and George Fotiou");
 	System.out.println("_____________________");

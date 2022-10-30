@@ -35,15 +35,16 @@ public class Ship {
 	
 	
 	public void checkboatStatus(){
+		if(countOfHoles == 0) {
+			  boatStatus = 'S';
+			}
 		if(countOfHoles == numHoles ){
 			boatStatus = 'U';
 		}else 
-			if(countOfHoles < numHoles) {
+			if(countOfHoles < numHoles && countOfHoles > 0) {
 			boatStatus = 'H';
-			}else 
-			if(countOfHoles == 0) {
-			  boatStatus = 'S';
 			}
+			
 	}
 	
 	public char getBoatStatus(){
